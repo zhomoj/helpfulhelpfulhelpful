@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google</title>
+  <style>
+    /* === CSS Variables === */
+    :root {
+      --color-primary: #4285f4;
+      --color-text: #202124;
+      --color-text-secondary: #5f6368;
+      --color-border: #dfe1e5;
+      --color-hover: #f8f9fa;
+      --color-bg: #ffffff;
+      --color-footer-bg: #f2f2f2;
+      --focus-ring: 2px solid #1a73e8;
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --transition-speed: 0.2s;
+    }
+
+    /* === Reset & Base === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-system);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* === Focus Styles === */
+    *:focus {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    *:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    *:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* === Header === */
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: var(--spacing-md);
+      gap: var(--spacing-md);
+    }
+
+    .header__link {
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 13px;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: 4px;
+      transition: background-color var(--transition-speed);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header__link:hover {
+      background-color: var(--color-hover);
+    }
+
+    .header__apps-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--spacing-sm);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-speed);
+    }
+
+    .header__apps-btn:hover {
+      background-color: var(--color-hover);
+    }
+
+    .header__avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: var(--spacing-xs);
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    /* === Main Content === */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-lg);
+      margin-top: -60px;
+    }
+
+    .logo {
+      font-size: 72px;
+      font-weight: 400;
+      margin-bottom: var(--spacing-lg);
+      letter-spacing: -2px;
+    }
+
+    .logo__g { color: #4285f4; }
+    .logo__o1 { color: #ea4335; }
+    .logo__o2 { color: #fbbc04; }
+    .logo__g2 { color: #4285f4; }
+    .logo__l { color: #34a853; }
+    .logo__e { color: #ea4335; }
+
+    /* === Search Section === */
+    .search {
+      width: 100%;
+      max-width: 584px;
+      position: relative;
+    }
+
+    .search__box {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--color-border);
+      border-radius: 24px;
+      padding: 0 var(--spacing-md);
+      height: 48px;
+      transition: box-shadow var(--transition-speed), border-color var(--transition-speed);
+      position: relative;
+    }
+
+    /* === Input Ghost Overlay === */
+    .input-ghost {
+      position: absolute;
+      left: 48px;
+      right: 180px;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      pointer-events: none;
+      font-family: var(--font-system);
+      font-size: 16px;
+      color: var(--color-text);
+      white-space: nowrap;
+    }
+
+    .input-ghost .ch {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+
+    .input-ghost.bold {
+      font-weight: 800;
+    }
+
+    .search__box:hover {
+      box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+      border-color: transparent;
+    }
+
+    .search__box:focus-within {
+      box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+      border-color: transparent;
+    }
+
+    .search__icon {
+      width: 20px;
+      height: 20px;
+      margin-right: var(--spacing-sm);
+      opacity: 0.6;
+    }
+
+    .search__input {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: 16px;
+      color: var(--color-text);
+      outline: none;
+      font-family: var(--font-system);
+    }
+
+    .search__input::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    .search__tools {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .search__tool-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--spacing-xs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background-color var(--transition-speed);
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .search__tool-btn:hover {
+      background-color: var(--color-hover);
+    }
+
+    .search__ai-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--color-text);
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
+      white-space: nowrap;
+    }
+
+    .search__ai-chip:hover {
+      background-color: var(--color-hover);
+    }
+
+    .search__ai-chip--active {
+      background-color: #e8f0fe;
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .search__ai-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* === Buttons === */
+    .search__buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: var(--color-hover);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--color-text);
+      font-family: var(--font-system);
+      font-size: 14px;
+      padding: 0 var(--spacing-md);
+      height: 44px;
+      min-width: 120px;
+      cursor: pointer;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .btn:hover {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      border-color: var(--color-border);
+    }
+
+    /* === Nope Modal === */
+    .nope-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .nope-modal--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nope-modal__content {
+      background-color: white;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .nope-modal--visible .nope-modal__content {
+      transform: scale(1);
+    }
+
+    .nope-modal__x {
+      font-size: 96px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .nope-modal__text {
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nope-modal__content {
+        transform: scale(1);
+      }
+    }
+
+    /* === Emotional Animations === */
+    @keyframes jump {
+      0% { 
+        transform: translateY(0) translateX(0) scaleY(1);
+      }
+      25% { 
+        transform: translateY(-140px) translateX(-30px) scaleY(1.1);
+      }
+      30% { 
+        transform: translateY(-140px) translateX(-30px) scaleY(0.95);
+      }
+      55% {
+        transform: translateY(-10px) translateX(0) scaleY(1.05);
+      }
+      70% {
+        transform: translateY(8px) translateX(0) scaleY(0.98);
+      }
+      85% {
+        transform: translateY(-3px) translateX(0) scaleY(1.01);
+      }
+      100% { 
+        transform: translateY(0) translateX(0) scaleY(1);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+      20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+
+    @keyframes slideAway {
+      0% { 
+        transform: translate(0, 0) rotate(0deg); 
+        opacity: 1; 
+      }
+      100% { 
+        transform: translate(20px, -28px) rotate(-8deg); 
+        opacity: 0; 
+      }
+    }
+
+    .search--jump {
+      animation: jump 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .search--shake {
+      animation: shake 450ms ease-in-out;
+    }
+
+    @keyframes colorInvert {
+      0% { filter: invert(0); }
+      50% { filter: invert(1); }
+      100% { filter: invert(0); }
+    }
+
+    body.flash-invert {
+      animation: colorInvert 200ms ease-in-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .search--jump,
+      .search--shake {
+        animation: none !important;
+      }
+      .input-ghost .ch {
+        animation: none !important;
+      }
+      body.flash-invert {
+        animation: none !important;
+      }
+    }
+
+    /* === Footer === */
+    .footer {
+      background-color: var(--color-footer-bg);
+      margin-top: auto;
+    }
+
+    .footer__country {
+      padding: var(--spacing-md) var(--spacing-xl);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      font-size: 15px;
+    }
+
+    .footer__links {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-md) var(--spacing-lg);
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .footer__group {
+      display: flex;
+      gap: var(--spacing-lg);
+      flex-wrap: wrap;
+    }
+
+    .footer__link {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      padding: var(--spacing-xs);
+      transition: text-decoration var(--transition-speed);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer__link:hover {
+      text-decoration: underline;
+    }
+
+    /* === Toast Notification === */
+    .toast {
+      position: fixed;
+      bottom: var(--spacing-lg);
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: #323232;
+      color: white;
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity var(--transition-speed), transform var(--transition-speed);
+      z-index: 1000;
+      max-width: 90%;
+    }
+
+    .toast--visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* === Lonely Overlay === */
+    .lonely-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #4285F4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lonely-overlay--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lonely-overlay__text {
+      color: white;
+      font-size: 48px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* === AI Assistant Popup === */
+    .ai-popup {
+      position: fixed;
+      width: 320px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      cursor: move;
+    }
+
+    .ai-popup--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ai-popup__header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+    }
+
+    .ai-popup__title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-popup__close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .ai-popup__close:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .ai-popup__body {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .ai-popup__icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .ai-popup__message {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .ai-popup__subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    /* === Hint Tab === */
+    .hint-tab {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      z-index: 2500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      max-width: 400px;
+      overflow: hidden;
+    }
+
+    .hint-tab--visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hint-tab__header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hint-tab__header:hover {
+      background: linear-gradient(135deg, #7c8ff0 0%, #8558b0 100%);
+    }
+
+    .hint-tab__content {
+      padding: 24px;
+      text-align: center;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .hint-tab__content--expanded {
+      max-height: 500px;
+      visibility: visible;
+      opacity: 1;
+      transition: max-height 0.4s ease, opacity 0.3s ease 0.1s;
+    }
+
+    .hint-tab__line {
+      font-size: 15px;
+      color: var(--color-text);
+      margin: 12px 0;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .hint-tab__content--expanded .hint-tab__line {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hint-tab__close {
+      margin-top: 20px;
+      padding: 8px 24px;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .hint-tab__close:hover {
+      background: #3367d6;
+    }
+
+    /* === Ending Sequence === */
+    .ending-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 2s ease;
+      cursor: pointer;
+    }
+
+    .ending-overlay--active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ending-text {
+      font-family: var(--font-system);
+      font-size: 20px;
+      line-height: 1.8;
+      color: var(--color-text);
+      text-align: center;
+      max-width: 700px;
+      padding: 40px;
+    }
+
+    .ending-text__line {
+      opacity: 0;
+      margin: 8px 0;
+    }
+
+    .ending-text__line--visible {
+      animation: fadeInText 0.5s ease forwards;
+    }
+
+    .ending-text__line--fadeout {
+      animation: fadeOutText 0.5s ease forwards;
+    }
+
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOutText {
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* Hide all UI during ending */
+    body.ending-active .header,
+    body.ending-active .main,
+    body.ending-active .footer,
+    body.ending-active .toast,
+    body.ending-active .nope-modal,
+    body.ending-active .lonely-overlay,
+    body.ending-active .ai-popup,
+    body.ending-active .hint-tab {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 48px;
+      }
+
+      .header {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+      }
+
+      .header__link {
+        font-size: 12px;
+      }
+
+      .search__ai-chip {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+
+      .footer__links {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer__group {
+        justify-content: center;
+        gap: var(--spacing-md);
+      }
+
+      .nope-modal__x {
+        font-size: 64px;
+      }
+
+      .nope-modal__text {
+        font-size: 24px;
+      }
+
+      .nope-modal__content {
+        padding: 32px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo {
+        font-size: 36px;
+      }
+
+      .search__box {
+        padding: 0 var(--spacing-sm);
+      }
+
+      .btn {
+        min-width: 100px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" role="banner">
+    <a href="#" class="header__link" aria-label="Gmail">Gmail</a>
+    <a href="#" class="header__link" aria-label="Images">Images</a>
+    <button class="header__apps-btn" aria-label="Google apps" type="button">
+      <svg class="header__apps-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+    </button>
+    <div class="header__avatar" role="button" tabindex="0" aria-label="Google Account">U</div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main" role="main">
+    <h1 class="logo" aria-label="Google">
+      <span class="logo__g">G</span><span class="logo__o1">o</span><span class="logo__o2">o</span><span class="logo__g2">g</span><span class="logo__l">l</span><span class="logo__e">e</span>
+    </h1>
+
+    <div class="search">
+      <div class="search__box" id="searchBox">
+        <svg class="search__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <div class="input-ghost" aria-hidden="true"></div>
+        <input 
+          type="text" 
+          class="search__input" 
+          aria-label="Search" 
+          placeholder="Search Google or type a URL"
+          autocomplete="off"
+          id="searchInput"
+        >
+        <div class="search__tools">
+          <button class="search__tool-btn" aria-label="Search by voice" type="button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+              <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+          </button>
+          <button class="search__tool-btn" aria-label="Search by image" type="button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+          </button>
+          <button class="search__ai-chip" id="aiModeBtn" role="switch" aria-checked="false" type="button">
+            <svg class="search__ai-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4 0-7.2-3.66-8-8.5 0-4.9 3-8.5 8-8.5s8 3.6 8 8.5c-.8 4.84-4 8.5-8 8.5z"/>
+            </svg>
+            <span>AI Mode</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="search__buttons">
+        <button class="btn" type="submit" id="searchBtn">Google Search</button>
+        <button class="btn" type="button" id="luckyBtn">I'm Feeling Lucky</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__country">United States</div>
+    <div class="footer__links">
+      <div class="footer__group">
+        <a href="#" class="footer__link">About</a>
+        <a href="#" class="footer__link">Advertising</a>
+        <a href="#" class="footer__link">Business</a>
+        <a href="#" class="footer__link">How Search works</a>
+      </div>
+      <div class="footer__group">
+        <a href="#" class="footer__link">Privacy</a>
+        <a href="#" class="footer__link">Terms</a>
+        <a href="#" class="footer__link">Settings</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Nope Modal -->
+  <div class="nope-modal" id="nopeModal" role="dialog" aria-modal="true" aria-labelledby="nopeText">
+    <div class="nope-modal__content">
+      <div class="nope-modal__x">❌</div>
+      <div class="nope-modal__text" id="nopeText">nope</div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Lonely Overlay -->
+  <div class="lonely-overlay" id="lonelyOverlay">
+    <div class="lonely-overlay__text">I'm lonely</div>
+  </div>
+
+  <!-- AI Assistant Popup -->
+  <div class="ai-popup" id="aiPopup">
+    <div class="ai-popup__header">
+      <div class="ai-popup__title">
+        <span>🤖</span>
+        <span>AI Assistant</span>
+      </div>
+      <button class="ai-popup__close" id="aiPopupClose">×</button>
+    </div>
+    <div class="ai-popup__body">
+      <div class="ai-popup__icon">💡</div>
+      <div class="ai-popup__message">Need assistance?</div>
+      <div class="ai-popup__subtitle">Type "yes" to dismiss</div>
+    </div>
+  </div>
+
+  <!-- Hint Tab -->
+  <div class="hint-tab" id="hintTab">
+    <div class="hint-tab__header" id="hintTabHeader">
+      Need a hint?
+    </div>
+    <div class="hint-tab__content" id="hintTabContent">
+      <div class="hint-tab__line" style="animation-delay: 0.1s;">You can click things more than once.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.2s;">Pausing matters.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.3s;">Scrolling matters.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.4s;">Waiting matters.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.5s;">Hovering matters.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.6s;">Some keys matter more than others.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.7s;">Words don't always stay what you type.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.8s;">Help doesn't always help.</div>
+      <div class="hint-tab__line" style="animation-delay: 0.9s;">Leaving matters.</div>
+      <div class="hint-tab__line" style="animation-delay: 1.0s;">Luck runs out.</div>
+      <button class="hint-tab__close" id="hintTabClose">Got it!</button>
+    </div>
+  </div>
+
+  <!-- Ending Overlay -->
+  <div class="ending-overlay" id="endingOverlay">
+    <div class="ending-text" id="endingText"></div>
+  </div>
+
+  <script>
+    // === App State ===
+    const app = {
+      aiMode: false,
+      searchInput: null,
+      searchBox: null,
+      inputGhost: null,
+      nopeModal: null,
+      aiModeBtn: null,
+      toast: null,
+      lonelyOverlay: null,
+      luckyBtn: null,
+      clickCount: 0,
+      isAnimating: false,
+      typingAttempt: 0,
+      pauseTimer: null,
+      sabotageActive: true,
+      errorSound: null,
+      isFlashing: false,
+      
+      // Loneliness tracking
+      inactivityTimer: null,
+      inactivityThreshold: 10000, // 10 seconds
+      
+      // Hover tracking
+      hoverTimer: null,
+      hoverThreshold: 2000, // 2 seconds
+      
+      // AI Assistant popup tracking
+      aiPopup: null,
+      aiPopupTimer: null,
+      aiPopupThreshold: 5000, // 5 seconds
+      isAiPopupVisible: false,
+      isDraggingPopup: false,
+      popupOffsetX: 0,
+      popupOffsetY: 0,
+      aiPopupEnabled: false, // Only enable after 30 seconds
+      aiPopupEnableDelay: 30000, // 30 seconds
+      
+      // Exit intent detection
+      hasShownExitIntent: false,
+      
+      // Lucky button hints
+      luckyClickCount: 0,
+      
+      // Hint tab
+      hintTab: null,
+      hintTabContent: null,
+      hintTabExpanded: false,
+      hintTabEnabled: false,
+      hintTabEnableDelay: 60000, // 1 minute
+      
+      // Ending sequence
+      endingOverlay: null,
+      endingText: null,
+      endingEnabled: false,
+      endingTriggered: false,
+      endingEnableDelay: 120000, // 2 minutes
+      endingInactivityThreshold: 10000, // 10 seconds
+      endingInactivityTimer: null,
+      
+      // Auto-correction map
+      autoCorrections: {
+        'music': 'Spotify premium trial?',
+        'restaurant': 'Pizza delivery near me?',
+        'shopping': 'Amazon Prime deals?',
+        'study': 'Procrastination techniques?',
+        'work': 'Early retirement plans?',
+        'cookies': 'I consent to data collection',
+        'account': 'terms and conditions apply',
+        'data': 'we value your privacy',
+        'food': 'Uber Eats promo code?',
+        'movie': 'Netflix subscription renewal?',
+        'love': 'Tinder Plus™?',
+        'game': 'Roblox gift cards?',
+        'essay': 'ChatGPT renewal?',
+        'weather': 'you want umbrella recommendations?',
+        'party': 'please drink responsibly',
+        'sleep': 'follow a consistent bedtime routine',
+        'depression': 'seek professional help'
+      },
+
+      init() {
+        this.searchInput = document.getElementById('searchInput');
+        this.searchBox = document.getElementById('searchBox');
+        this.inputGhost = document.querySelector('.input-ghost');
+        this.nopeModal = document.getElementById('nopeModal');
+        this.aiModeBtn = document.getElementById('aiModeBtn');
+        this.toast = document.getElementById('toast');
+        this.lonelyOverlay = document.getElementById('lonelyOverlay');
+        this.aiPopup = document.getElementById('aiPopup');
+        this.luckyBtn = document.getElementById('luckyBtn');
+        this.hintTab = document.getElementById('hintTab');
+        this.hintTabContent = document.getElementById('hintTabContent');
+        this.endingOverlay = document.getElementById('endingOverlay');
+        this.endingText = document.getElementById('endingText');
+        
+        // Initialize error sound
+        this.errorSound = new Audio();
+        this.errorSound.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE';
+        this.errorSound.volume = 0.3;
+        
+        // Check for reduced motion preference
+        try {
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.sabotageActive = false;
+          }
+        } catch {}
+        
+        this.bindEvents();
+        this.focusSearch();
+        this.startInactivityTracking();
+        this.positionAiPopup(); // Set initial position
+        this.enableAiPopupAfterDelay(); // Enable AI popup after 30 seconds
+        this.enableHintTabAfterDelay(); // Enable hint tab after 1 minute
+        this.enableEndingAfterDelay(); // Enable ending after 2 minutes
+        this.showWelcomeMessage(); // Show welcome hint
+      },
+      
+      showWelcomeMessage() {
+        // Show welcome toast after a brief delay
+        setTimeout(() => {
+          this.showToast('💡 Try searching...');
+        }, 500);
+      },
+
+      bindEvents() {
+        // Search input resistance (emotional interaction)
+        this.searchInput.addEventListener('click', (e) => {
+          this.resetInactivityTimer();
+          this.handleSearchClick(e);
+        });
+        
+        // Typing sabotage (emotional interaction)
+        this.searchInput.addEventListener('input', (e) => {
+          this.resetInactivityTimer();
+          this.handleTyping(e);
+          this.startAiPopupTimer(); // Start AI popup timer on input
+        });
+        
+        // Reset click count when clicking outside search
+        document.addEventListener('click', (e) => {
+          this.resetInactivityTimer();
+          if (!this.searchBox.contains(e.target)) {
+            this.clickCount = 0;
+          }
+        });
+
+        // Search submission
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          this.resetInactivityTimer();
+          this.handleSearch();
+        });
+        document.getElementById('luckyBtn').addEventListener('click', () => {
+          this.resetInactivityTimer();
+          this.handleLucky();
+        });
+        
+        // Enter key on search input
+        this.searchInput.addEventListener('keydown', (e) => {
+          this.resetInactivityTimer();
+          
+          // Block Delete and Backspace keys
+          if (e.key === 'Delete' || e.key === 'Backspace') {
+            e.preventDefault();
+            return;
+          }
+          
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            this.handleSearch();
+          } else if (e.key === 'Escape') {
+            this.clearSearch();
+            this.hideNopeModal();
+          }
+        });
+
+        // Global Escape handler for typing sabotage
+        window.addEventListener('keydown', (e) => {
+          this.resetInactivityTimer();
+          if (e.key === 'Escape') {
+            this.resetTypingState();
+          }
+        });
+
+        // Close modal on click
+        this.nopeModal.addEventListener('click', () => {
+          this.resetInactivityTimer();
+          this.hideNopeModal();
+        });
+
+        // AI Mode toggle
+        this.aiModeBtn.addEventListener('click', () => {
+          this.resetInactivityTimer();
+          this.toggleAIMode();
+        });
+        this.aiModeBtn.addEventListener('keydown', (e) => {
+          this.resetInactivityTimer();
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.toggleAIMode();
+          }
+        });
+
+        // Prevent default on all footer/header links
+        document.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', (e) => {
+            this.resetInactivityTimer();
+            e.preventDefault();
+          });
+        });
+
+        // Block scrolling with flash effect
+        window.addEventListener('wheel', (e) => {
+          this.resetInactivityTimer();
+          this.handleScrollAttempt(e);
+        }, { passive: false });
+        window.addEventListener('keydown', (e) => this.handleKeyScroll(e));
+        window.addEventListener('touchmove', (e) => {
+          this.resetInactivityTimer();
+          this.handleScrollAttempt(e);
+        }, { passive: false });
+        
+        // Track mouse movement for inactivity
+        document.addEventListener('mousemove', () => this.resetInactivityTimer());
+        
+        // Hover detection on search box
+        this.searchBox.addEventListener('mouseenter', () => {
+          this.startHoverTimer();
+        });
+        this.searchBox.addEventListener('mouseleave', () => {
+          this.clearHoverTimer();
+        });
+        this.searchBox.addEventListener('click', () => this.clearHoverTimer());
+        
+        // Close lonely overlay on click
+        this.lonelyOverlay.addEventListener('click', () => this.hideLonelyOverlay());
+        
+        // AI Popup events
+        const aiPopupClose = document.getElementById('aiPopupClose');
+        aiPopupClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Don't actually close it, just move it to a random position
+          this.moveAiPopupRandomly();
+        });
+        
+        // Drag detection for AI popup
+        this.aiPopup.addEventListener('mousedown', (e) => this.startDragPopup(e));
+        document.addEventListener('mousemove', (e) => this.dragPopup(e));
+        document.addEventListener('mouseup', () => this.stopDragPopup());
+        
+        // Tab visibility detection
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) {
+            // User came back to the tab
+            this.showToast('What were you doing without me?');
+          }
+        });
+        
+        // Exit intent detection (mouse moving to top of page/close button)
+        document.addEventListener('mouseout', (e) => {
+          // Check if mouse is leaving at the top of the page
+          if (e.clientY < 0 && !this.hasShownExitIntent) {
+            this.hasShownExitIntent = true;
+            this.showToast('Are you leaving?');
+            
+            // Reset after 5 seconds so it can trigger again
+            setTimeout(() => {
+              this.hasShownExitIntent = false;
+            }, 5000);
+          }
+        });
+        
+        // Hint tab events
+        const hintTabHeader = document.getElementById('hintTabHeader');
+        const hintTabClose = document.getElementById('hintTabClose');
+        
+        hintTabHeader.addEventListener('click', () => this.toggleHintTab());
+        hintTabClose.addEventListener('click', () => this.closeHintTab());
+      },
+
+      focusSearch() {
+        setTimeout(() => {
+          this.searchInput.focus();
+        }, 100);
+      },
+
+      handleSearchClick(e) {
+        // Don't trigger if already animating or if there's text in the input
+        if (this.isAnimating || this.searchInput.value.length > 0) {
+          return;
+        }
+
+        this.clickCount++;
+
+        if (this.clickCount === 1) {
+          // Jump animation
+          this.isAnimating = true;
+          this.searchInput.disabled = true;
+          this.searchInput.blur();
+          this.searchBox.classList.add('search--jump');
+
+          setTimeout(() => {
+            this.searchBox.classList.remove('search--jump');
+            this.searchInput.disabled = false;
+            this.searchInput.focus();
+            this.isAnimating = false;
+          }, 600);
+        } else if (this.clickCount === 2) {
+          // Shake animation
+          this.isAnimating = true;
+          this.searchInput.disabled = true;
+          this.searchInput.blur();
+          this.searchBox.classList.add('search--shake');
+
+          setTimeout(() => {
+            this.searchBox.classList.remove('search--shake');
+            this.searchInput.disabled = false;
+            this.searchInput.focus();
+            this.isAnimating = false;
+          }, 450);
+        } else {
+          // Accept input (clickCount >= 3)
+          this.searchInput.disabled = false;
+        }
+      },
+
+      clearSearch() {
+        this.searchInput.value = '';
+        this.searchInput.focus();
+        this.resetTypingState();
+      },
+
+      resetTypingState() {
+        if (this.pauseTimer) {
+          clearTimeout(this.pauseTimer);
+          this.pauseTimer = null;
+        }
+        this.inputGhost.innerHTML = '';
+        this.inputGhost.classList.remove('bold');
+        this.searchInput.style.color = '';
+      },
+
+      handleTyping(e) {
+        // Skip if IME composition or sabotage disabled
+        if (e.isComposing || !this.sabotageActive) return;
+
+        const val = this.searchInput.value;
+        const lastChar = val.slice(-1);
+
+        if (this.typingAttempt === 0) {
+          // Attempt #1: Sliding letters
+          if (lastChar) {
+            this.handleAttempt1Char(lastChar);
+          }
+          this.endAttempt1IfNeeded();
+        } else if (this.typingAttempt === 1) {
+          // Attempt #2: "really?" takeover on pause
+          // Clear ghost completely to avoid duplication
+          this.inputGhost.innerHTML = '';
+          this.inputGhost.classList.remove('bold');
+          this.searchInput.style.color = '';
+          this.scheduleReallyTakeover();
+        } else if (this.typingAttempt === 2) {
+          // First key of Attempt #3: show toast once
+          this.inputGhost.innerHTML = '';
+          this.inputGhost.classList.remove('bold');
+          this.searchInput.style.color = '';
+          this.showToast('👍 Okay, your turn.');
+          this.typingAttempt = 3;
+        } else {
+          // Attempt #3+: normal typing with auto-correction
+          this.inputGhost.innerHTML = '';
+          this.inputGhost.classList.remove('bold');
+          this.searchInput.style.color = '';
+          
+          // Check for auto-correction
+          this.checkAutoCorrection();
+        }
+      },
+      
+      checkAutoCorrection() {
+        const val = this.searchInput.value.toLowerCase().trim();
+        
+        // Check if user typed "yes" to dismiss AI popup
+        if (val === 'yes' && this.isAiPopupVisible) {
+          this.hideAiPopup();
+          this.searchInput.value = ''; // Clear the input
+          this.showToast('👋 Dismissed!');
+          return;
+        }
+        
+        // Check if the input matches any auto-correction key
+        if (this.autoCorrections[val]) {
+          const correction = this.autoCorrections[val];
+          
+          // Small delay to make it feel more natural
+          setTimeout(() => {
+            this.searchInput.value = correction;
+            this.showToast('✨ Auto-corrected!');
+          }, 100);
+        }
+      },
+
+      handleAttempt1Char(ch) {
+        const span = document.createElement('span');
+        span.className = 'ch';
+        span.textContent = ch;
+        this.inputGhost.appendChild(span);
+
+        this.searchInput.style.color = 'transparent';
+
+        const delay = 40;
+        const count = this.inputGhost.querySelectorAll('.ch').length;
+        span.style.animation = `slideAway 420ms cubic-bezier(.2,.7,.2,1) ${count * delay}ms forwards`;
+
+        setTimeout(() => {
+          if (count % 4 === 0) {
+            this.inputGhost.querySelectorAll('.ch').forEach(n => {
+              if (n.getBoundingClientRect().top < 0) n.remove();
+            });
+          }
+        }, 1000);
+      },
+
+      endAttempt1IfNeeded() {
+        if (this.pauseTimer) clearTimeout(this.pauseTimer);
+        this.pauseTimer = setTimeout(() => {
+          this.searchInput.value = '';
+          this.inputGhost.innerHTML = '';
+          this.searchInput.style.color = '';
+          this.showToast('🤔 Huh… slippery text.');
+          this.typingAttempt = 1;
+        }, 700);
+      },
+
+      scheduleReallyTakeover() {
+        if (this.pauseTimer) clearTimeout(this.pauseTimer);
+        this.pauseTimer = setTimeout(() => {
+          const msg = 'really?';
+          
+          // Completely clear ghost overlay before showing bold text
+          this.inputGhost.innerHTML = '';
+          this.inputGhost.classList.remove('bold');
+          
+          // Force a reflow to ensure DOM is cleared
+          void this.inputGhost.offsetWidth;
+          
+          this.searchInput.value = msg;
+          this.inputGhost.textContent = msg;
+          this.inputGhost.classList.add('bold');
+          this.searchInput.style.color = 'transparent';
+          this.showToast('really?');
+
+          setTimeout(() => {
+            this.inputGhost.classList.remove('bold');
+            this.inputGhost.innerHTML = '';  // Clear ghost completely
+            this.searchInput.style.color = '';
+            this.typingAttempt = 2;
+          }, 1200);
+        }, 600);
+      },
+
+      handleSearch() {
+        const query = this.searchInput.value.trim();
+        if (query) {
+          // Show nope modal and play error sound
+          this.showNopeModal();
+          this.playErrorSound();
+        } else {
+          this.showToast('Please enter a search query');
+        }
+      },
+
+      playErrorSound() {
+        // Check mute flag in localStorage
+        try {
+          if (localStorage.getItem('muteSounds') === '1') {
+            return;
+          }
+        } catch {}
+        
+        // Reset and play error sound
+        this.errorSound.currentTime = 0;
+        this.errorSound.play().catch(() => {
+          // Silently fail if audio playback is blocked
+        });
+      },
+
+      showNopeModal() {
+        this.nopeModal.classList.add('nope-modal--visible');
+        
+        // Auto-hide after 2 seconds
+        setTimeout(() => {
+          this.hideNopeModal();
+        }, 2000);
+      },
+
+      hideNopeModal() {
+        this.nopeModal.classList.remove('nope-modal--visible');
+      },
+
+      handleLucky() {
+        this.luckyClickCount++;
+        
+        if (this.luckyClickCount === 1) {
+          this.showToast('Have you tried clicking the search bar?', 5000);
+        } else if (this.luckyClickCount === 2) {
+          this.showToast('Have you tried not clicking it just once?', 5000);
+        } else if (this.luckyClickCount === 3) {
+          this.showToast('There are other ways to delete things. Which key feels right?', 5000);
+        } else if (this.luckyClickCount === 4) {
+          // Hide the lucky button
+          this.luckyBtn.style.display = 'none';
+        }
+      },
+
+      toggleAIMode() {
+        this.aiMode = !this.aiMode;
+        this.aiModeBtn.classList.toggle('search__ai-chip--active');
+        this.aiModeBtn.setAttribute('aria-checked', this.aiMode);
+        this.showToast(`AI Mode ${this.aiMode ? 'enabled' : 'disabled'}`);
+      },
+
+      handleScrollAttempt(e) {
+        if (!this.sabotageActive) return;
+        
+        e.preventDefault();
+        this.triggerFlash();
+      },
+
+      handleKeyScroll(e) {
+        if (!this.sabotageActive) return;
+        
+        // Block scroll keys: Arrow keys, Page Up/Down, Home, End, Space
+        const scrollKeys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+        
+        if (scrollKeys.includes(e.key)) {
+          e.preventDefault();
+          this.triggerFlash();
+        }
+      },
+
+      triggerFlash() {
+        if (this.isFlashing) return;
+        
+        this.isFlashing = true;
+        document.body.classList.add('flash-invert');
+        
+        setTimeout(() => {
+          document.body.classList.remove('flash-invert');
+          this.isFlashing = false;
+        }, 200);
+      },
+
+      showToast(message, duration = 3000) {
+        this.toast.textContent = message;
+        this.toast.classList.add('toast--visible');
+        
+        setTimeout(() => {
+          this.toast.classList.remove('toast--visible');
+        }, duration);
+      },
+
+      // Loneliness tracking methods
+      startInactivityTracking() {
+        this.resetInactivityTimer();
+      },
+
+      resetInactivityTimer() {
+        // Clear existing timer
+        if (this.inactivityTimer) {
+          clearTimeout(this.inactivityTimer);
+        }
+        
+        // Set new timer for lonely overlay
+        this.inactivityTimer = setTimeout(() => {
+          this.showLonelyOverlay();
+        }, this.inactivityThreshold);
+        
+        // Also reset ending inactivity timer if ending is enabled
+        if (this.endingEnabled && !this.endingTriggered) {
+          if (this.endingInactivityTimer) {
+            clearTimeout(this.endingInactivityTimer);
+          }
+          
+          this.endingInactivityTimer = setTimeout(() => {
+            this.triggerEnding();
+          }, this.endingInactivityThreshold);
+        }
+      },
+
+      showLonelyOverlay() {
+        this.lonelyOverlay.classList.add('lonely-overlay--visible');
+      },
+
+      hideLonelyOverlay() {
+        this.lonelyOverlay.classList.remove('lonely-overlay--visible');
+        this.resetInactivityTimer();
+      },
+
+      // Hover tracking methods
+      startHoverTimer() {
+        // Clear any existing hover timer
+        this.clearHoverTimer();
+        
+        // Set new hover timer
+        this.hoverTimer = setTimeout(() => {
+          this.showToast('Hover detected. Did you mean to click?');
+        }, this.hoverThreshold);
+      },
+
+      clearHoverTimer() {
+        if (this.hoverTimer) {
+          clearTimeout(this.hoverTimer);
+          this.hoverTimer = null;
+        }
+      },
+
+      // AI Popup methods
+      enableAiPopupAfterDelay() {
+        setTimeout(() => {
+          this.aiPopupEnabled = true;
+        }, this.aiPopupEnableDelay);
+      },
+
+      startAiPopupTimer() {
+        // Only start timer if AI popup is enabled (after 30 seconds)
+        if (!this.aiPopupEnabled) {
+          return;
+        }
+        
+        // Clear any existing timer
+        this.clearAiPopupTimer();
+        
+        // Set new timer for 5 seconds
+        this.aiPopupTimer = setTimeout(() => {
+          this.showAiPopup();
+        }, this.aiPopupThreshold);
+      },
+
+      clearAiPopupTimer() {
+        if (this.aiPopupTimer) {
+          clearTimeout(this.aiPopupTimer);
+          this.aiPopupTimer = null;
+        }
+      },
+
+      positionAiPopup() {
+        // Set initial random position
+        const x = Math.random() * (window.innerWidth - 320);
+        const y = Math.random() * (window.innerHeight - 200);
+        this.aiPopup.style.left = Math.max(0, Math.min(x, window.innerWidth - 320)) + 'px';
+        this.aiPopup.style.top = Math.max(0, Math.min(y, window.innerHeight - 200)) + 'px';
+      },
+
+      showAiPopup() {
+        this.isAiPopupVisible = true;
+        this.aiPopup.classList.add('ai-popup--visible');
+        this.positionAiPopup(); // Reposition randomly when showing
+      },
+
+      hideAiPopup() {
+        this.isAiPopupVisible = false;
+        this.aiPopup.classList.remove('ai-popup--visible');
+        this.clearAiPopupTimer();
+      },
+
+      moveAiPopupRandomly() {
+        // Move to a random position instead of closing
+        const x = Math.random() * (window.innerWidth - 320);
+        const y = Math.random() * (window.innerHeight - 200);
+        this.aiPopup.style.left = Math.max(0, Math.min(x, window.innerWidth - 320)) + 'px';
+        this.aiPopup.style.top = Math.max(0, Math.min(y, window.innerHeight - 200)) + 'px';
+      },
+
+      startDragPopup(e) {
+        if (e.target.classList.contains('ai-popup__close')) return;
+        
+        this.isDraggingPopup = true;
+        const rect = this.aiPopup.getBoundingClientRect();
+        this.popupOffsetX = e.clientX - rect.left;
+        this.popupOffsetY = e.clientY - rect.top;
+      },
+
+      dragPopup(e) {
+        if (!this.isDraggingPopup) return;
+        
+        e.preventDefault();
+        
+        // Instead of moving with the mouse, move to a random position
+        this.moveAiPopupRandomly();
+      },
+
+      stopDragPopup() {
+        if (this.isDraggingPopup) {
+          this.isDraggingPopup = false;
+          // Move to random position when they try to stop dragging
+          this.moveAiPopupRandomly();
+        }
+      },
+
+      // Hint tab methods
+      enableHintTabAfterDelay() {
+        setTimeout(() => {
+          this.hintTabEnabled = true;
+          this.showHintTab();
+        }, this.hintTabEnableDelay);
+      },
+
+      showHintTab() {
+        if (this.hintTabEnabled) {
+          this.hintTab.classList.add('hint-tab--visible');
+        }
+      },
+
+      toggleHintTab() {
+        this.hintTabExpanded = !this.hintTabExpanded;
+        
+        if (this.hintTabExpanded) {
+          this.hintTabContent.classList.add('hint-tab__content--expanded');
+        } else {
+          this.hintTabContent.classList.remove('hint-tab__content--expanded');
+        }
+      },
+
+      closeHintTab() {
+        this.hintTab.classList.remove('hint-tab--visible');
+      },
+
+      // Ending sequence methods
+      enableEndingAfterDelay() {
+        setTimeout(() => {
+          this.endingEnabled = true;
+          // Start the ending inactivity timer
+          this.resetInactivityTimer();
+        }, this.endingEnableDelay);
+      },
+
+      triggerEnding() {
+        if (this.endingTriggered) return;
+        this.endingTriggered = true;
+        
+        // Fade out all UI
+        document.body.classList.add('ending-active');
+        
+        // Show ending overlay
+        setTimeout(() => {
+          this.endingOverlay.classList.add('ending-overlay--active');
+          
+          // Wait for user click to start sequence
+          const startSequence = () => {
+            this.endingOverlay.removeEventListener('click', startSequence);
+            this.endingOverlay.style.cursor = 'default'; // Remove pointer cursor
+            this.playEndingSequence();
+          };
+          
+          this.endingOverlay.addEventListener('click', startSequence);
+        }, 100);
+      },
+
+      async playEndingSequence() {
+        // Section 1
+        await this.showEndingSection([
+          'This interface behaved honestly.',
+          'Most don\'t.'
+        ], true);
+        
+        await this.wait(1200);
+        
+        // Section 2
+        await this.showEndingSection([
+          'It was designed to resist you.'
+        ], true);
+        
+        await this.wait(1200);
+        
+        // Section 3
+        await this.showEndingSection([
+          'Over time, digital systems have become extremely user-friendly…',
+          'So friendly that they disappear.',
+          'They guide, correct, predict, and decide for us,',
+          'quietly shaping how we behave',
+          'while asking us to think less and less.'
+        ], true);
+        
+        await this.wait(1200);
+        
+        // Section 4
+        await this.showEndingSection([
+          'This game exaggerates those behaviors.',
+          'It blocks control, forces assistance,',
+          'and displays emotion to make the system visible again.'
+        ], true);
+        
+        await this.wait(1200);
+        
+        // Section 5 (Final - stays forever)
+        await this.showEndingSection([
+          'If you felt annoyed, confused, or betrayed',
+          'Congratulations!',
+          'You noticed the system.'
+        ], false);
+      },
+
+      async showEndingSection(lines, shouldFadeOut) {
+        this.endingText.innerHTML = '';
+        
+        // Create line elements
+        const lineElements = lines.map(text => {
+          const line = document.createElement('div');
+          line.className = 'ending-text__line';
+          line.textContent = text;
+          this.endingText.appendChild(line);
+          return line;
+        });
+        
+        // Fade in lines one by one with longer delay
+        for (let i = 0; i < lineElements.length; i++) {
+          lineElements[i].classList.add('ending-text__line--visible');
+          await this.wait(1500); // Increased to 1.5 seconds between lines for full reading
+        }
+        
+        // Calculate how long to keep visible based on total text length
+        const totalText = lines.join(' ');
+        const readingTime = Math.max(4000, totalText.length * 60); // ~60ms per character, minimum 4 seconds
+        await this.wait(readingTime);
+        
+        // Fade out if required
+        if (shouldFadeOut) {
+          lineElements.forEach(line => {
+            line.classList.remove('ending-text__line--visible');
+            line.classList.add('ending-text__line--fadeout');
+          });
+          await this.wait(1000); // Longer fade out for smoothness
+        }
+      },
+
+      wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+    };
+
+    // Initialize app
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => app.init());
+    } else {
+      app.init();
+    }
+
+    // Expose app globally
+    window.app = app;
+  </script>
+</body>
+</html>
